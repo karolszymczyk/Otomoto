@@ -27,7 +27,7 @@ summary(results)
 plot(density(results), lwd=2, col='blueviolet')
 
 
-#EX2
+#2
 results <- data.frame('price'=numeric(), 'year'=numeric())
 pb <- progress_bar$new(total=N)
 for(i in 1:N){
@@ -61,7 +61,7 @@ results %>% group_by(year) %>% summarize(mean(price))
 
 
 
-#EX3
+#3
 N = 5
 results <- data.frame('price'=numeric(), 'year'=numeric(), 'mileage'=numeric(), 'fuel'=c(), 'region'=c())
 pb <- progress_bar$new(total=N)
@@ -112,7 +112,7 @@ for(i in 1:N){
 table(results$region)
 
 
-#Exercise 4: Analyze what impacts the pricedata 
+#4: Analyze what impacts the price
 
 data <- results
 data <- data[data$mileage < 2000000,]
@@ -130,14 +130,12 @@ p
 p <- ggplot(data, aes(x=region, y=price)) + 
   geom_violin(fill="red3")
 p
-#Modelowanie ceny auta za pomocą wieku auta (włączając efekty kwadratowe)
-# Warto zwrócić uwagę, na ograniczoną skuteczność modelu wynikającą z jego struktury (powyżej pewnego wieku auta model traci sens)
+
 fit <- lm(price ~ year + I(year^2), data=data)
 summary(fit)
 plot(x=data$year, y=data$price, pch=19)
 lines(x = 0:30, y = predict(object = fit, data.frame(year = 0:30)), col = 'darkgoldenrod1', lwd=2)
-#Modelowanie ceny auta za pomocą wieku auta (włączając wiek^2 i wiek^3)
-# Warto zwrócić uwagę, że powyżej ~x=20 model traci sens
+
 fit <- lm(price ~ year + I(year^2) + I(year^3), data=data)
 summary(fit)
 plot(x=data$year, y=data$price, pch=19)
